@@ -1,0 +1,50 @@
+:root {
+    --arge-blue: rgb(21, 44, 97);
+    --arge-blue-shadow: rgba(21, 44, 97, 0.2);
+}
+.demo {
+  font-family: sans-serif;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  padding: 20px 30px;
+  margin-top: 1em;
+  margin-bottom: 40px;
+  user-select: none;
+  overflow-x: auto;
+}
+
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+
+.object-detection-preview {
+    max-width: 80vw;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.obj-det-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: black;
+    width: fit-content;
+    height: fit-content;
+}
+
+.obj-det-btn:active{
+    transform: translateY(4px);
+    border: none;
+    outline: none;
+}
+
+.obj-det-btn:hover {
+    color: var(--arge-blue);
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: var(--arge-blue);
+    border-color: var(--arge-blue)
+}
