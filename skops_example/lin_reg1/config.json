@@ -1,0 +1,22 @@
+{
+    "sklearn": {
+        "columns": [
+            "x"
+        ],
+        "environment": [
+            "scikit-learn"
+        ],
+        "example_input": {
+            "x": [
+                0.07786338762689529,
+                -0.039618128426111884,
+                0.011039039046285686
+            ]
+        },
+        "model": {
+            "file": "model.pkl"
+        },
+        "model_format": "pickle",
+        "task": "tabular-regression"
+    }
+}

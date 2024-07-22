@@ -31,10 +31,15 @@ app.add_middleware(
 )
 
 class XValues(BaseModel):
-    pass
+    x1: int
 
 class ExchangeFormat(BaseModel):
-    pass
+    x: XValues = None
+    api_key: Union[str, None] = None
+    api_secret: Union[str, None] = None
+    #description: str | None = None
+    #price: float
+    #tax: float | None = None
 
 @app.get("/")
 def read_root():
@@ -48,7 +53,7 @@ def valid_secret(api_key, api_secret):
 
 
 def predict_query(payload):
-    API_URL = "YOUR QUERY URL"
+    API_URL = "https://hjropwsuc4psaxqo.eu-west-1.aws.endpoints.huggingface.cloud"
     headers = {
         "Accept" : "application/json",
         "Content-Type": "application/json" 
@@ -57,10 +62,30 @@ def predict_query(payload):
     return response.json()
 
 @app.post("/img")
-async def create_upload_file():
-    pass
+async def create_upload_file(api_key: Annotated[str, Form()], api_secret: Annotated[str, Form()], upload_file: Annotated[UploadFile, Form()]):
+    print(api_key, api_secret)
+    if api_key is None and api_secret is None:
+        raise HTTPException(status_code=404, detail="missing api_key ore api_secret")
+    elif not valid_secret(api_key, api_secret):
+        raise HTTPException(status_code=404, detail="invalid api_key ore api_secret")
+    
+    upload_file_content = await upload_file.read()
+    img = Image.open(io.BytesIO(upload_file_content))
+
+    return {}
 
 
 @app.post("/predict/")
-async def predict(values: ExchangeFormat):
-    pass
+async def predict(values: ExchangeFormat):# -> XVars: 
+    
+    print(values.api_key, values.api_secret, values.x)
+    if values.api_key is None and values.api_secret is None:
+        raise HTTPException(status_code=404, detail="missing api_key ore api_secret")
+    elif not valid_secret(values.api_key, values.api_secret):
+        raise HTTPException(status_code=404, detail="invalid api_key ore api_secret")
+
+    output = predict_query({
+        "inputs": [[values.x.x1]],
+        "parameters": {}
+    })
+    return {"result": output[0][0]}
